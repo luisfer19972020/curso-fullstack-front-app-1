@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-root',
+  selector:'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls:['./app.component.css']
 })
 export class AppComponent {
-  title = 'clientes-app-front';
+  title:string = 'Bienvenido a Angular';
+  curso:string = 'Curso de spring + angular';
+  profesor:string = 'Luis Fernando';
 }
