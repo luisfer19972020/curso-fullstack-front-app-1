@@ -6,4 +6,7 @@ import { Component } from '@angular/core';
 })
 export class DirectivaComponent {
   listaCurso: string[] = ['Javascript', 'Typescript', 'Java SE', 'C#', 'Php'];
+  habilitar: boolean = true;
+
+  setHabilitar = ()=> this.habilitar = !this.habilitar;
 }
