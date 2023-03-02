@@ -1,7 +1,10 @@
 <div class="card border-secundary mb-3">
     <div class="card-header">Clientes</div>
     <div class="card-body text-secundary">
-        <h5 class="card-title">Listado de clientes</h5>
+        <div class="d-flex justify-content-between">
+            <h5 class="card-title">Listado de clientes</h5>
+            <a [routerLink]="['/clientes/form']" routerLinkActive="router-link-active"  class="btn btn-sm btn-primary float-right mb-3"> + Nuevo Cliente</a>
+        </div>
         <table class="table table-dark table-striped table-bordered">
             <thead>
                 <tr>
