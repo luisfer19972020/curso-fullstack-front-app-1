@@ -12,13 +12,28 @@ export class ClienteService {
 
   constructor(private httpClient: HttpClient) { }
 
-  getClintes = (): Observable<Cliente[]> =>
+  getClientes = (): Observable<Cliente[]> =>
     this.httpClient.get<Cliente[]>(this.url + this.urlClientes, { headers: this.httpHeaders }).pipe(
-      catchError((response) => throwError(() => response))
+      catchError((response) => throwError(() => response.error))
     );
 
   create = (cliente: Cliente): Observable<Cliente> =>
     this.httpClient.post<Cliente>(this.url + this.urlClientes, cliente, { headers: this.httpHeaders }).pipe(
-      catchError((response) => throwError(() => response))
+      catchError((response) => throwError(() => response.error.message))
+    );
+
+  getCliente = (id: number): Observable<Cliente> =>
+    this.httpClient.get<Cliente>(`${this.url}${this.urlClientes}/${id}`, { headers: this.httpHeaders }).pipe(
+      catchError((response) => throwError(() => response.error.message))
+    );
+
+  update = (cliente: Cliente): Observable<Cliente> =>
+    this.httpClient.put<Cliente>(`${this.url}${this.urlClientes}/${cliente.id}`, cliente, { headers: this.httpHeaders }).pipe(
+      catchError((response) => throwError(() => response.error.message))
+    );
+
+  delete = (id: number): Observable<Cliente> =>
+    this.httpClient.delete<Cliente>(`${this.url}${this.urlClientes}/${id}`, { headers: this.httpHeaders }).pipe(
+      catchError((response) => throwError(() => response.error))
     );
 }
