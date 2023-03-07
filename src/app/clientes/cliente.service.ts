@@ -14,7 +14,7 @@ export class ClienteService {
 
   getClientes = (): Observable<Cliente[]> =>
     this.httpClient.get<Cliente[]>(this.url + this.urlClientes, { headers: this.httpHeaders }).pipe(
-      catchError((response) => throwError(() => response.error))
+      catchError((response) => throwError(() => response.error.message))
     );
 
   create = (cliente: Cliente): Observable<Cliente> =>
@@ -34,6 +34,6 @@ export class ClienteService {
 
   delete = (id: number): Observable<Cliente> =>
     this.httpClient.delete<Cliente>(`${this.url}${this.urlClientes}/${id}`, { headers: this.httpHeaders }).pipe(
-      catchError((response) => throwError(() => response.error))
+      catchError((response) => throwError(() => response.error.message))
     );
 }
