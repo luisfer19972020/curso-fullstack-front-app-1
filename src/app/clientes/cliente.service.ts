@@ -7,6 +7,7 @@ import { environment } from 'src/environments/environment.prod';
 export class ClienteService {
 
   private url: string = environment.URL;
+  private BAD_REQUEST: number = environment.BAD_REQUEST;
   private urlClientes: string = 'api/clientes';
   private httpHeaders = new HttpHeaders({ 'Content-Type': 'Application/json' });
 
@@ -19,7 +20,12 @@ export class ClienteService {
 
   create = (cliente: Cliente): Observable<Cliente> =>
     this.httpClient.post<Cliente>(this.url + this.urlClientes, cliente, { headers: this.httpHeaders }).pipe(
-      catchError((response) => throwError(() => response.error.message))
+      catchError((response) => {
+        if (response.status == this.BAD_REQUEST) {
+          response.error.message = response.error.errors.toString().replace(",", "<br>")
+        }
+        return throwError(() => response.error.message)
+      })
     );
 
   getCliente = (id: number): Observable<Cliente> =>
@@ -29,11 +35,19 @@ export class ClienteService {
 
   update = (cliente: Cliente): Observable<Cliente> =>
     this.httpClient.put<Cliente>(`${this.url}${this.urlClientes}/${cliente.id}`, cliente, { headers: this.httpHeaders }).pipe(
-      catchError((response) => throwError(() => response.error.message))
+      catchError((response) => {
+        if (response.status == this.BAD_REQUEST) {
+          response.error.message = response.error.errors.toString().replace(",", "<br>")
+        }
+        return throwError(() => response.error.message)
+      })
     );
 
   delete = (id: number): Observable<Cliente> =>
     this.httpClient.delete<Cliente>(`${this.url}${this.urlClientes}/${id}`, { headers: this.httpHeaders }).pipe(
-      catchError((response) => throwError(() => response.error.message))
+      catchError((response) => {
+        console.log(response);
+        return throwError(() => response.error.message)
+      })
     );
 }

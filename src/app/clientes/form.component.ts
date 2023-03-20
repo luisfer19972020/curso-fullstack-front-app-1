@@ -55,7 +55,7 @@ export class FormComponent implements OnInit {
       Swal.fire({
         icon: 'error',
         title: 'Oops...',
-        text: message,
+        html: message,
       })
   });
 
@@ -77,7 +77,7 @@ export class FormComponent implements OnInit {
       error: (message) => Swal.fire({
         icon: 'error',
         title: 'Oops...',
-        text: message,
+        html: message,
       })
     })
   }
