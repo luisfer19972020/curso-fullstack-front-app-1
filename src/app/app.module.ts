@@ -1,6 +1,5 @@
-import { NgModule } from '@angular/core';
+import { LOCALE_ID, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
@@ -11,6 +10,11 @@ import { RouterModule, Routes } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { FormComponent } from './clientes/form.component';
 import { FormsModule } from '@angular/forms';
+import { registerLocaleData } from '@angular/common';
+
+//Traducir
+import localeEsMx from '@angular/common/locales/es-MX';
+registerLocaleData(localeEsMx, 'es')
 
 const routes: Routes = [
   { path: '', redirectTo: '/clientes', pathMatch: 'full' },
@@ -34,7 +38,8 @@ const routes: Routes = [
     RouterModule.forRoot(routes),
     FormsModule
   ],
-  providers: [ClienteService],
+  providers: [ClienteService,
+    { provide: LOCALE_ID, useValue: "es-MX" },],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
