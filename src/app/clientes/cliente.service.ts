@@ -16,20 +16,9 @@ export class ClienteService {
 
   constructor(private httpClient: HttpClient) { }
 
-  getClientes = (): Observable<Cliente[]> =>
-    this.httpClient.get<Cliente[]>(this.url + this.urlClientes, { headers: this.httpHeaders }).pipe(
-      tap(response => response.forEach(c => console.log(c.nombre))),
-      map(response => response.map(c => {
-        c.nombre = c.nombre.toUpperCase();
-        //OPCION 1
-        //c.createdAt = formatDate(c.createdAt,this.FORMAT_FULL_DATE,'es-MX');
-        //OPCION 2
-        //let datePipe= new DatePipe('en-US');
-        //c.createdAt = datePipe.transform(c.createdAt,this.FORMAT_FULL_DATE);
-        //OPCION 3 pipe en la plantilla
-        return c;
-      })),
-      tap(response => response.forEach(c => console.log(c.nombre))),
+  getClientes = (page: number): Observable<Cliente[]> =>
+    this.httpClient.get<Cliente[]>(this.url + this.urlClientes + `/page/${page}`, { headers: this.httpHeaders }).pipe(
+      map((response: any) => response.content),
       catchError((response) => throwError(() => response.error.message))
     );
 

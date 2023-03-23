@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import Swal from 'sweetalert2';
 import { Cliente } from './cliente';
 import { ClienteService } from './cliente.service';
@@ -9,19 +10,24 @@ import { ClienteService } from './cliente.service';
   templateUrl: './clientes.component.html',
 })
 export class ClientesComponent implements OnInit {
-
   clientes: Cliente[];
-  constructor(private clienteService: ClienteService) { }
+  constructor(private clienteService: ClienteService, private activatedRoute: ActivatedRoute) { }
   ngOnInit(): void {
-    this.clienteService.getClientes().subscribe({
-      next: response => this.clientes = response,
-      error: (message) =>
-        Swal.fire({
-          icon: 'error',
-          title: 'Oops...',
-          text: message,
-        })
-    });
+    this.activatedRoute.paramMap.subscribe(params => {
+      let page: number = +params.get('page');
+      if (!page) {
+        page = 0;
+      }
+      this.clienteService.getClientes(page).subscribe({
+        next: response => this.clientes = response,
+        error: (message) =>
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: message,
+          })
+      });
+    })
   }
 
   delete = ({ nombre, apellido, id }): void => {
