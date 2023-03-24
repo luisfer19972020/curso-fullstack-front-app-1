@@ -16,9 +16,9 @@ export class ClienteService {
 
   constructor(private httpClient: HttpClient) { }
 
-  getClientes = (page: number): Observable<Cliente[]> =>
-    this.httpClient.get<Cliente[]>(this.url + this.urlClientes + `/page/${page}`, { headers: this.httpHeaders }).pipe(
-      map((response: any) => response.content),
+  getClientes = (page: number): Observable<any> =>
+    this.httpClient.get<any>(this.url + this.urlClientes + `/page/${page}`, { headers: this.httpHeaders }).pipe(
+      map((response: any) => response),
       catchError((response) => throwError(() => response.error.message))
     );
 

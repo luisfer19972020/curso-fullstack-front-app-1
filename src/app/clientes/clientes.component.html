@@ -18,7 +18,7 @@
                 </tr>
             </thead>
             <tbody *ngIf="clientes?.length>0;else emptyClients">
-                <tr *ngFor="let cliente of clientes" >
+                <tr *ngFor="let cliente of clientes">
                     <td>{{cliente.id}}</td>
                     <td>{{cliente.nombre}}</td>
                     <td>{{cliente.apellido | uppercase}}</td>
@@ -30,8 +30,12 @@
                         <button (click)="delete(cliente)" class="btn btn-sm btn-outline-danger">Eliminar</button>
                     </td>
                 </tr>
+                <tr>
+                    <td [colSpan]="6">
+                        <app-paginator *ngIf="paginator" [paginator]="paginator"></app-paginator>
+                    </td>
+                </tr>
             </tbody>
-            <app-paginator></app-paginator>
             <ng-template #emptyClients>
                 <tbody>
                     <tr>
@@ -40,6 +44,6 @@
                 </tbody>
             </ng-template>
         </table>
-       
+
     </div>
 </div>

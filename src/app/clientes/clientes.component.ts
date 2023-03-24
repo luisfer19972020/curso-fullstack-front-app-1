@@ -1,16 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import Swal from 'sweetalert2';
+import { Paginator } from '../models/paginator';
 import { Cliente } from './cliente';
 import { ClienteService } from './cliente.service';
 
-
+const PAGINATOR_LINK = '/clientes/page';
 @Component({
   selector: 'app-clientes',
   templateUrl: './clientes.component.html',
 })
 export class ClientesComponent implements OnInit {
   clientes: Cliente[];
+  paginator: Paginator;
   constructor(private clienteService: ClienteService, private activatedRoute: ActivatedRoute) { }
   ngOnInit(): void {
     this.activatedRoute.paramMap.subscribe(params => {
@@ -19,7 +21,11 @@ export class ClientesComponent implements OnInit {
         page = 0;
       }
       this.clienteService.getClientes(page).subscribe({
-        next: response => this.clientes = response,
+        next: response => {
+          this.clientes = response.content;
+          this.paginator = response;
+          this.paginator.link = PAGINATOR_LINK;
+        },
         error: (message) =>
           Swal.fire({
             icon: 'error',
