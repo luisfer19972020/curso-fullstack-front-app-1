@@ -44,6 +44,7 @@ export class DetalleComponent implements OnInit {
         this.progreso = Math.round((event.loaded / event.total) * 100);
       } else if (event.type === HttpEventType.Response) {
         this.cliente = event.body as Cliente;
+        this.modalService.uploadNotification.emit(this.cliente);
         Swal.fire({
           title: `Foto cargada para el cliente ${this.cliente.nombre} ${this.cliente.apellido} con exito!`,
           icon: 'success',

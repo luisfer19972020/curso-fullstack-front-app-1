@@ -40,7 +40,14 @@ export class ClientesComponent implements OnInit {
             text: message,
           })
       });
+    });
+    this.modalService.uploadNotification.subscribe(cliente => this.clientes.map(c => {
+      if (c.id == cliente.id) {
+        c.foto = cliente.foto;
+      }
+      return c;
     })
+    );
   }
 
   abrirModal = (cliente) => {
