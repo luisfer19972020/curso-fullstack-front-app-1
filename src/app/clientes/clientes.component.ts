@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { environment } from 'src/environments/environment.prod';
 import Swal from 'sweetalert2';
 import { Paginator } from '../models/paginator';
 import { Cliente } from './cliente';
 import { ClienteService } from './cliente.service';
+import { ModalService } from './detalle/modal.service';
 
 const PAGINATOR_LINK = '/clientes/page';
 @Component({
@@ -13,7 +15,12 @@ const PAGINATOR_LINK = '/clientes/page';
 export class ClientesComponent implements OnInit {
   clientes: Cliente[];
   paginator: Paginator;
-  constructor(private clienteService: ClienteService, private activatedRoute: ActivatedRoute) { }
+  clienteSeleccionado: Cliente;
+  FILE_ROUTE: string = `${environment.URL}api/uploads/img/`;
+  FILE_DEFAULT_ROUTE: string = `${environment.URL}images/`;
+
+  constructor(private clienteService: ClienteService, private activatedRoute: ActivatedRoute, private modalService: ModalService) { }
+
   ngOnInit(): void {
     this.activatedRoute.paramMap.subscribe(params => {
       let page: number = +params.get('page');
@@ -35,6 +42,11 @@ export class ClientesComponent implements OnInit {
       });
     })
   }
+
+  abrirModal = (cliente) => {
+    this.clienteSeleccionado = cliente;
+    this.modalService.openModal()
+  };
 
   delete = ({ nombre, apellido, id }): void => {
     Swal.fire({

@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Cliente } from './cliente';
 import { catchError, Observable, throwError, map, tap } from 'rxjs';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpEvent, HttpHeaders, HttpRequest } from '@angular/common/http';
 import { environment } from 'src/environments/environment.prod';
-import { formatDate, DatePipe } from '@angular/common';
 
 
 @Injectable()
@@ -13,6 +12,7 @@ export class ClienteService {
   private BAD_REQUEST: number = environment.BAD_REQUEST;
   private urlClientes: string = 'api/clientes';
   private httpHeaders = new HttpHeaders({ 'Content-Type': 'Application/json' });
+  private httpFileHeaders = new HttpHeaders({ 'Content-Type': 'multipart/form-data' });
 
   constructor(private httpClient: HttpClient) { }
 
@@ -49,9 +49,15 @@ export class ClienteService {
 
   delete = (id: number): Observable<Cliente> =>
     this.httpClient.delete<Cliente>(`${this.url}${this.urlClientes}/${id}`, { headers: this.httpHeaders }).pipe(
-      catchError((response) => {
-        console.log(response);
-        return throwError(() => response.error.message)
-      })
+      catchError((response) => throwError(() => response.error.message))
     );
+
+  upload = (file: File, id): Observable<HttpEvent<{}>> => {
+    let formData = new FormData();
+    formData.append("archivo", file);
+    formData.append("id", id);
+    return this.httpClient.request(new HttpRequest('POST', `${this.url}${this.urlClientes}/upload`,
+      formData,
+      { reportProgress: true }));
+  }
 }

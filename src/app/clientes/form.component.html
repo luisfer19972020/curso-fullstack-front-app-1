@@ -53,6 +53,17 @@
                     </div>
                 </div>
             </div>
+            <div class="form-group row">
+                <label for="createdAt" class="col-form-label col-sm-12">
+                    Fecha
+                </label>
+                <div class="col-sm-6">
+                    <input name="createdAt" [(ngModel)]="cliente.createdAt" class="form-control"
+                        [matDatepicker]="picker" style="display: inline-block; width: 85%;">
+                    <mat-datepicker-toggle [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </div>
+            </div>
             <div class="form-group text-center">
                 <div class="col-sm-6 ">
                     <button [disabled]="clienteForm.invalid" class="btn btn-primary btn-rounded" role="button"
