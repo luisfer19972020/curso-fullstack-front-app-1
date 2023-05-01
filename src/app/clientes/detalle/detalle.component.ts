@@ -3,7 +3,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { environment } from 'src/environments/environment.prod';
 import Swal from 'sweetalert2';
-import { Cliente } from '../cliente';
+import { Cliente } from '../../models/cliente';
 import { ClienteService } from '../cliente.service';
 import { ModalService } from './modal.service';
 

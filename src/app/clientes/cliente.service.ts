@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Cliente } from './cliente';
+import { Cliente } from '../models/cliente';
 import { catchError, Observable, throwError, map, tap } from 'rxjs';
 import { HttpClient, HttpEvent, HttpHeaders, HttpRequest } from '@angular/common/http';
 import { environment } from 'src/environments/environment.prod';
+import { Region } from '../models/region';
 
 
 @Injectable()
@@ -60,4 +61,9 @@ export class ClienteService {
       formData,
       { reportProgress: true }));
   }
+
+  getRegiones = (): Observable<Region[]> =>
+    this.httpClient.get<Region[]>(`${this.url}${this.urlClientes}/regiones`, { headers: this.httpHeaders }).pipe(
+      catchError((response) => throwError(() => response.error.message))
+    );
 }

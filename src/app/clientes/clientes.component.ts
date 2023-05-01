@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { environment } from 'src/environments/environment.prod';
 import Swal from 'sweetalert2';
 import { Paginator } from '../models/paginator';
-import { Cliente } from './cliente';
+import { Cliente } from '../models/cliente';
 import { ClienteService } from './cliente.service';
 import { ModalService } from './detalle/modal.service';
 
